@@ -22,7 +22,7 @@ print('--------------------------------------------')
 print('|                  Cliente                 |')
 print('--------------------------------------------')
 
-client = Client(wsdl='http://localhost:44383/WebService1.asmx?wsdl')
+client = Client(wsdl='http://localhost:54202/WebService.asmx?wsdl')
 
 minhasComprar = []
 indexCompra = 0
@@ -37,24 +37,25 @@ while True:
     op = input('> ')
 #------------------------------Listar Produtos -------------------------------------    
     if op == '1':
-        x = [client.service.ObterProdutoPorMarca('todas')]
-        x2 = [(x[0]['Produto'])]
-        print('\n')
-        ins = x2[0]
-        i = 0    
-        for prod in ins:
-            print ('Produto: ',ins[i]["nome"])
-            print ('Descrição: ',ins[i]["descricao"]) 
-            print ('Categoria: ',ins[i]["categoria"])
-            print ('Modelo: ',ins[i]["modelo"])
-            print ('Valor: R$ ',ins[i]["valor"])
-            disponivel = (ins[i]["quantidade"])
+        x = client.service.listProdut()
+        listaDeProduto = json.loads(x)
+        i = 0
+        for lista in listaDeProduto:
+            print ('Produto: ',listaDeProduto[i]["nome"])
+            print ('Descrição: ',listaDeProduto[i]["descricao"]) 
+            print ('Categoria: ',listaDeProduto[i]["categoria"])
+            print ('Modelo: ',listaDeProduto[i]["modelo"])
+            print ('Marca: ',listaDeProduto[i]["marca"])
+            print ('Valor: R$ ',listaDeProduto[i]["valor"])
+            disponivel = (listaDeProduto[i]["quantidade"])
             if disponivel != '0':
                 print("Status: Disponivel")
             else:
                 print("Status: Indisponivel")
             i = i + 1
             print('\n')
+
+
 #---------------------------- Comprar Produtos --------------------------------    
     elif op == '2':
         x = [client.service.ObterProdutoPorMarca('todas')]
@@ -88,25 +89,27 @@ while True:
             
 #---------------------------- Buscar Produtos ---------------------------------         
     elif op == '3':
-        marca = input('Marca > ')
-        x = [client.service.ObterProdutoPorMarca(marca)]
-        x2 = [(x[0]['Produto'])]
-        print('\n')
-        ins = x2[0]
-        i = 0    
-        for prod in ins:
-            print ('Produto: ',ins[i]["nome"])
-            print ('Descrição: ',ins[i]["descricao"]) 
-            print ('Categoria: ',ins[i]["categoria"])
-            print ('Modelo: ',ins[i]["modelo"])
-            print ('Valor: R$ ',ins[i]["valor"])
-            disponivel = (ins[i]["quantidade"])
+        try:
+            produto = json.loads(client.service.buscaProdut(input('Produto > ')))
+            print ('Produto: ',produto[0]["nome"])
+            print ('Descrição: ',produto[0]["descricao"]) 
+            print ('Categoria: ',produto[0]["categoria"])
+            print ('Modelo: ',produto[0]["modelo"])
+            print ('Marca: ',produto[0]["marca"])
+            print ('Valor: R$ ',produto[0]["valor"])
+            disponivel = (produto[0]["quantidade"])
             if disponivel != '0':
                 print("Status: Disponivel")
             else:
                 print("Status: Indisponivel")
-            i = i + 1
+                i = i + 1
             print('\n')
+        except:
+            print('< Não Encontrado >')
+
+
+        
+
 #---------------------------- Meus Produtos -----------------------------------             
     elif op == '4':
         print("operação 4")

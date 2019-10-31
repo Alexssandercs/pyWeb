@@ -23,7 +23,7 @@ print('|               Administrador              |')
 print('--------------------------------------------')
 
 #client = Client(wsdl='http://localhost:44383/WebService1.asmx?wsdl')
-
+client = Client(wsdl='http://localhost:54202/WebService.asmx?wsdl')
 while True:
     print('\n')
     print('1) Cadastrar Produto')
@@ -37,20 +37,26 @@ while True:
     op = input('> ')
 #------------------------------Listar Produtos --------------------------------    
     if op == '1':
+        idP = input('ID > ')
         produto = input('Produto > ')
         descricao = input('Descrição > ')
         categoria = input('Categoria > ')
         modelo = input('Modelo > ')
+        marca = input('Marca > ')
         valor = input('Valor > ')
         quantidade = input('Quantidade > ')
-        cadastroDeProduto = ('{"nome": "'+str(produto)+'", "descricao":"'+str(descricao)+
-                        '", "categoria":"'+str(categoria)+
-                        '", "modelo":"'+str(modelo)+
-                        '", "valor":"'+str(valor)+
-                        '", "quantidade":"'+str(quantidade)+'"}')
-        parsed_json = json.loads(cadastroDeProduto)
-        print(json.dumps(parsed_json))
-        break
+        cadastroDeProduto = ('{"id":"'+str(idP)+
+                               '", "nome":"'+str(produto)+
+                               '", "descricao":"'+str(descricao)+
+                               '", "categoria":"'+str(categoria)+
+                               '", "modelo":"'+str(modelo)+
+                               '", "marca":"'+str(marca)+
+                               '", "valor":"'+str(valor)+
+                               '", "quantidade":"'+str(quantidade)+'"}')
+        produtoCadastro = json.loads(cadastroDeProduto)
+        x = client.service.addProdut(cadastroDeProduto)
+        print('Produto Cadatrado Com Sucesso!')
+    
 #---------------------------- Comprar Produtos --------------------------------    
     elif op == '2':
         print("operação 2")
