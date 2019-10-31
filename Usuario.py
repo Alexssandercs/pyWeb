@@ -10,26 +10,29 @@ import json
 import os
 os.system('cls' if os.name == 'nt' else 'clear')
 print('\n')
-print('  _   __     ______      ___  ____  ____    ')
-print(' | | / /     | ___ \     |  \/  | | \ \ \   ')
-print(' | |/ /  __ _| |_/ /_   _| .  . | |  \ \ \  ')
-print(' |    \ / _` | ___ \ | | | |\/| | |   > > > ')
-print(' | |\  \ (_| | |_/ / |_| | |  | |_|  / / /  ')
-print(' \_| \_/\__,_\____/ \__,_\_|  |_(_) /_/_/   ')
-print(' ------------------------------------------ ')                                           
-print('|                  Cliente                 |')
-print(' ------------------------------------------ ')
+print('     _   __     ______      ___  ____  ____    ')
+print('    | | / /     | ___ \     |  \/  | | \ \ \   ')
+print('    | |/ /  __ _| |_/ /_   _| .  . | |  \ \ \  ')
+print('    |    \ / _` | ___ \ | | | |\/| | |   > > > ')
+print('    | |\  \ (_| | |_/ / |_| | |  | |_|  / / /  ')
+print('    \_| \_/\__,_\____/ \__,_\_|  |_(_) /_/_/   ')
+print('    ------------------------------------------ ')                                           
+print('   |                  Cliente                 |')
+print('    ------------------------------------------ ')
 client = Client(wsdl='http://localhost:54202/WebService.asmx?wsdl')
 while True:
     print('\n')
-    print('1) Listar Produtos')
-    print('2) Comprar Produtos')  
-    print('3) Buscar Produtos')
-    print('4) Meus Produtos')
-    print('5) Finalizar Compra')
-    print('0) Finalizar Seção')                                         
-    print('\n')
-    op = input('> ')
+    print('       ########################################')
+    print('       ###        Menu de Navegação         ###')
+    print('       ########################################')      
+    print('       |          1) Listar Produtos          |')
+    print('       |          2) Comprar Produtos         |')  
+    print('       |          3) Buscar Produtos          |')
+    print('       |          4) Meus Produtos            |')
+    print('       |          5) Finalizar Compra         |')
+    print('       |          0) Finalizar Seção          |')
+    print('       |______________________________________|')                                         
+    op = input('Por favor escolha uma opção [0-5] > ')
 #------------------------------Listar Produtos -------------------------------------    
     if op == '1':
         listaDeProduto = json.loads(client.service.listProdut())
@@ -50,36 +53,11 @@ while True:
             print('\n')
 #---------------------------- Comprar Produtos --------------------------------    
     elif op == '2':
-        x = [client.service.ObterProdutoPorMarca('todas')]
-        x2 = [(x[0]['Produto'])]
-        comprando = x2[0]
-        i = 0
-        listaNome = []
-        print('\n< Lista de Produtos >')
-        for prod in comprando:
-            disponivel = (comprando[i]["quantidade"])
-            if disponivel != '0':
-                listaNome.append(comprando[i]["nome"])
-                print(listaNome[i])
-                i = i + 1        
-        try: 
-            comprar = input('Produto > ')
-            listaNome.index(comprar)
-            quantidade = input('Quantidade > ')           
-            if(int(quantidade) <= 0):
-                print('Quantidade deve ser maior que 0(zero)')    
-                while (int(quantidade) <= 0):
-                    quantidade = input('Quantidade > ')
-            compraJson = '{"nome": "'+comprar+'", "quantidade":"'+str(quantidade)+'"}'
-            parsed_json = json.loads(compraJson)
-            print(parsed_json['nome'])
-            print(json.dumps(parsed_json))                       
-        except:
-            print('< Produto Inexistente >')            
+        print('Este modulo não está pronto')  
 #---------------------------- Buscar Produtos ---------------------------------         
     elif op == '3':
         try:
-            produto = json.loads(client.service.buscaProdut(input('Produto > ')))
+            produto = json.loads(client.service.buscaProdut(input('Buscar Produtos > Produto > ')))
             print ('Produto: ',produto[0]["nome"])
             print ('Descrição: ',produto[0]["descricao"]) 
             print ('Categoria: ',produto[0]["categoria"])
@@ -96,10 +74,10 @@ while True:
             print('< Não Encontrado >')
 #---------------------------- Meus Produtos -----------------------------------             
     elif op == '4':
-        print("operação 4")
+        print('Este modulo não está pronto')  
 #------------------------- Finalizar Compra -----------------------------------             
     elif op == '5':
-        print("operação 5")        
+        print('Este modulo não está pronto')          
 #-------------------------------- Sair ---------------------------------------- 
     elif op == '0':
         break
