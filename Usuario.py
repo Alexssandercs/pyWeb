@@ -37,8 +37,7 @@ while True:
     op = input('> ')
 #------------------------------Listar Produtos -------------------------------------    
     if op == '1':
-        x = client.service.listProdut()
-        listaDeProduto = json.loads(x)
+        listaDeProduto = json.loads(client.service.listProdut())
         i = 0
         for lista in listaDeProduto:
             print ('Produto: ',listaDeProduto[i]["nome"])
@@ -54,8 +53,6 @@ while True:
                 print("Status: Indisponivel")
             i = i + 1
             print('\n')
-
-
 #---------------------------- Comprar Produtos --------------------------------    
     elif op == '2':
         x = [client.service.ObterProdutoPorMarca('todas')]
@@ -102,7 +99,6 @@ while True:
                 print("Status: Disponivel")
             else:
                 print("Status: Indisponivel")
-                i = i + 1
             print('\n')
         except:
             print('< Não Encontrado >')

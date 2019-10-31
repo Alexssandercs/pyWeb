@@ -35,7 +35,7 @@ while True:
     print('0) Sair')                                         
     print('\n')
     op = input('> ')
-#------------------------------Listar Produtos --------------------------------    
+#----------------------------- Cadastrar Produtos -----------------------------    
     if op == '1':
         idP = input('ID > ')
         produto = input('Produto > ')
@@ -53,25 +53,93 @@ while True:
                                '", "marca":"'+str(marca)+
                                '", "valor":"'+str(valor)+
                                '", "quantidade":"'+str(quantidade)+'"}')
-        produtoCadastro = json.loads(cadastroDeProduto)
-        x = client.service.addProdut(cadastroDeProduto)
-        print('Produto Cadatrado Com Sucesso!')
+        op = input('Deseja Cadastrar esse Produto ? (1-Sim / 2-Não) > ')
+        if op == 1:
+            produtoCadastro = json.loads(cadastroDeProduto)
+            x = client.service.addProdut(cadastroDeProduto)
+            print('Produto Cadatrado com Sucesso!')
+        else:
+            print('Cadatrado Cancelado!')
     
-#---------------------------- Comprar Produtos --------------------------------    
+#---------------------------- Alterar Produtos --------------------------------    
     elif op == '2':
-        print("operação 2")
+        idP = input('ID > ')
+        produto = input('Produto > ')
+        descricao = input('Descrição > ')
+        categoria = input('Categoria > ')
+        modelo = input('Modelo > ')
+        marca = input('Marca > ')
+        valor = input('Valor > ')
+        quantidade = input('Quantidade > ')
+        cadastroDeProduto = ('{"id":"'+str(idP)+
+                               '", "nome":"'+str(produto)+
+                               '", "descricao":"'+str(descricao)+
+                               '", "categoria":"'+str(categoria)+
+                               '", "modelo":"'+str(modelo)+
+                               '", "marca":"'+str(marca)+
+                               '", "valor":"'+str(valor)+
+                               '", "quantidade":"'+str(quantidade)+'"}')
+        op = input('Deseja Alterar esse Produto ? (1-Sim / 2-Não) > ')
+        if op == 1:
+            produtoCadastro = json.loads(cadastroDeProduto)
+            x = client.service.alterarProdut(cadastroDeProduto)
+            print('Produto Alterado Com Sucesso!')
+        else:
+            print('Cadatrado Cancelado!')
+        
+        
 #---------------------------- Buscar Produtos ---------------------------------         
     elif op == '3':
-        print('opecação 3')
-#---------------------------- Meus Produtos -----------------------------------             
+        try:
+            produto = json.loads(client.service.buscaProdut(input('Produto > ')))
+            print ('Produto: ',produto[0]["nome"])
+            print ('Descrição: ',produto[0]["descricao"]) 
+            print ('Categoria: ',produto[0]["categoria"])
+            print ('Modelo: ',produto[0]["modelo"])
+            print ('Marca: ',produto[0]["marca"])
+            print ('Valor: R$ ',produto[0]["valor"])
+            print ('Quantidade: ',produto[0]["quantidade"],' Produtos Disponível')
+        except:
+            print('< Não Encontrado >')
+#---------------------------- Listar Produtos -----------------------------------             
     elif op == '4':
-        print("operação 4")
+        listaDeProduto = json.loads(client.service.listProdut())
+        i = 0
+        for lista in listaDeProduto:
+            print ('Codigo: ',listaDeProduto[i]["id"])
+            print ('Produto: ',listaDeProduto[i]["nome"])
+            print ('Descrição: ',listaDeProduto[i]["descricao"]) 
+            print ('Categoria: ',listaDeProduto[i]["categoria"])
+            print ('Modelo: ',listaDeProduto[i]["modelo"])
+            print ('Marca: ',listaDeProduto[i]["marca"])
+            print ('Valor: R$ ',listaDeProduto[i]["valor"])
+            print ('Quantidade: ',listaDeProduto[i]["quantidade"],' Produtos Disponível')
+            i = i + 1
+            print('\n')
 #-------------------------- Histórico de Compras ------------------------------             
     elif op == '5':
         print("operação 5")
 #---------------------------- Deletar Produto ---------------------------------             
     elif op == '6':
-        print("operação 6")        
+        try:
+            produto = json.loads(client.service.buscaProdut(input('Produto > ')))
+            print ('Codigo: ',produto[0]["id"])
+            print ('Produto: ',produto[0]["nome"])
+            print ('Descrição: ',produto[0]["descricao"]) 
+            print ('Categoria: ',produto[0]["categoria"])
+            print ('Modelo: ',produto[0]["modelo"])
+            print ('Marca: ',produto[0]["marca"])
+            print ('Valor: R$ ',produto[0]["valor"])
+            print ('Quantidade: ',produto[0]["quantidade"],' Produtos Disponível')
+            print('\n')
+            op = input('Deseja Deletar Esse Produto ? (1-Sim / 2-Não) > ')
+            if op == '1':
+                x = client.service.deletarProdut((produto[0]["id"]))
+                print('Produto Deletado Com Sucesso!')
+            else:
+                print('Pedido Cancelado!')
+        except:
+            print('< Não Encontrado >')     
 #-------------------------------- Sair ---------------------------------------- 
     elif op == '0':
         break
