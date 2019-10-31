@@ -18,9 +18,9 @@ print(' | |/ /  __ _| |_/ /_   _| .  . | |  \ \ \  ')
 print(' |    \ / _` | ___ \ | | | |\/| | |   > > > ')
 print(' | |\  \ (_| | |_/ / |_| | |  | |_|  / / /  ')
 print(' \_| \_/\__,_\____/ \__,_\_|  |_(_) /_/_/   ')
-print('--------------------------------------------')                                           
+print(' ------------------------------------------')                                           
 print('|               Administrador              |')
-print('--------------------------------------------')
+print(' ------------------------------------------')
 
 #client = Client(wsdl='http://localhost:44383/WebService1.asmx?wsdl')
 client = Client(wsdl='http://localhost:54202/WebService.asmx?wsdl')
@@ -32,7 +32,7 @@ while True:
     print('4) Listar Produtos')
     print('5) Histórico de Compras')
     print('6) Deletar Produto')
-    print('0) Sair')                                         
+    print('0) Finalizar Seção')                                         
     print('\n')
     op = input('> ')
 #----------------------------- Cadastrar Produtos -----------------------------    
@@ -45,18 +45,20 @@ while True:
         marca = input('Marca > ')
         valor = input('Valor > ')
         quantidade = input('Quantidade > ')
-        cadastroDeProduto = ('{"id":"'+str(idP)+
-                               '", "nome":"'+str(produto)+
+        cadastroDeProduto = ('{"id":'+str(idP)+
+                               ', "nome":"'+str(produto)+
                                '", "descricao":"'+str(descricao)+
                                '", "categoria":"'+str(categoria)+
                                '", "modelo":"'+str(modelo)+
                                '", "marca":"'+str(marca)+
-                               '", "valor":"'+str(valor)+
-                               '", "quantidade":"'+str(quantidade)+'"}')
+                               '", "valor":'+str(valor)+
+                               ', "quantidade":'+str(quantidade)+'}')
+        print(cadastroDeProduto) 
         op = input('Deseja Cadastrar esse Produto ? (1-Sim / 2-Não) > ')
-        if op == 1:
+        if op == '1':
             produtoCadastro = json.loads(cadastroDeProduto)
-            x = client.service.addProdut(cadastroDeProduto)
+            x = client.service.addProdut(produtoCadastro)
+            print(x)
             print('Produto Cadatrado com Sucesso!')
         else:
             print('Cadatrado Cancelado!')
@@ -71,14 +73,14 @@ while True:
         marca = input('Marca > ')
         valor = input('Valor > ')
         quantidade = input('Quantidade > ')
-        cadastroDeProduto = ('{"id":"'+str(idP)+
-                               '", "nome":"'+str(produto)+
+        cadastroDeProduto = ('{"id":'+str(idP)+
+                               ', "nome":"'+str(produto)+
                                '", "descricao":"'+str(descricao)+
                                '", "categoria":"'+str(categoria)+
                                '", "modelo":"'+str(modelo)+
                                '", "marca":"'+str(marca)+
-                               '", "valor":"'+str(valor)+
-                               '", "quantidade":"'+str(quantidade)+'"}')
+                               ', "valor":'+str(valor)+
+                               ', "quantidade":'+str(quantidade)+'}')
         op = input('Deseja Alterar esse Produto ? (1-Sim / 2-Não) > ')
         if op == 1:
             produtoCadastro = json.loads(cadastroDeProduto)
@@ -86,8 +88,6 @@ while True:
             print('Produto Alterado Com Sucesso!')
         else:
             print('Cadatrado Cancelado!')
-        
-        
 #---------------------------- Buscar Produtos ---------------------------------         
     elif op == '3':
         try:

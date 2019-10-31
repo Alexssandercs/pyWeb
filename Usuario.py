@@ -9,8 +9,6 @@ from zeep import Client
 import json
 import os
 os.system('cls' if os.name == 'nt' else 'clear')
-#client = Client(wsdl='http://localhost:44383/WebService1.asmx?wsdl')
-#client = Client(wsdl='http://localhost:44383/WebService1.asmx')
 print('\n')
 print('  _   __     ______      ___  ____  ____    ')
 print(' | | / /     | ___ \     |  \/  | | \ \ \   ')
@@ -18,21 +16,18 @@ print(' | |/ /  __ _| |_/ /_   _| .  . | |  \ \ \  ')
 print(' |    \ / _` | ___ \ | | | |\/| | |   > > > ')
 print(' | |\  \ (_| | |_/ / |_| | |  | |_|  / / /  ')
 print(' \_| \_/\__,_\____/ \__,_\_|  |_(_) /_/_/   ')
-print('--------------------------------------------')                                           
+print(' ------------------------------------------ ')                                           
 print('|                  Cliente                 |')
-print('--------------------------------------------')
-
+print(' ------------------------------------------ ')
 client = Client(wsdl='http://localhost:54202/WebService.asmx?wsdl')
-
-minhasComprar = []
-indexCompra = 0
 while True:
     print('\n')
     print('1) Listar Produtos')
     print('2) Comprar Produtos')  
     print('3) Buscar Produtos')
     print('4) Meus Produtos')
-    print('0) Sair')                                         
+    print('5) Finalizar Compra')
+    print('0) Finalizar Seção')                                         
     print('\n')
     op = input('> ')
 #------------------------------Listar Produtos -------------------------------------    
@@ -66,8 +61,7 @@ while True:
             if disponivel != '0':
                 listaNome.append(comprando[i]["nome"])
                 print(listaNome[i])
-                i = i + 1
-        
+                i = i + 1        
         try: 
             comprar = input('Produto > ')
             listaNome.index(comprar)
@@ -79,11 +73,9 @@ while True:
             compraJson = '{"nome": "'+comprar+'", "quantidade":"'+str(quantidade)+'"}'
             parsed_json = json.loads(compraJson)
             print(parsed_json['nome'])
-            print(json.dumps(parsed_json))
-                       
+            print(json.dumps(parsed_json))                       
         except:
-            print('< Produto Inexistente >')
-            
+            print('< Produto Inexistente >')            
 #---------------------------- Buscar Produtos ---------------------------------         
     elif op == '3':
         try:
@@ -102,19 +94,14 @@ while True:
             print('\n')
         except:
             print('< Não Encontrado >')
-
-
-        
-
 #---------------------------- Meus Produtos -----------------------------------             
     elif op == '4':
         print("operação 4")
+#------------------------- Finalizar Compra -----------------------------------             
+    elif op == '5':
+        print("operação 5")        
 #-------------------------------- Sair ---------------------------------------- 
     elif op == '0':
         break
     else:
-        print('Opcao invalida!')
-
-    
-    
-    
+        print('Opcao invalida!')    
