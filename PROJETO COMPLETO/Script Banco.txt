@@ -1,0 +1,32 @@
+CREATE DATABASE Vendas1;
+
+USE Vendas1;
+
+CREATE TABLE [dbo].[Pedido](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[valor] [decimal] NOT NULL,
+	[status] [nchar](10) NOT NULL,
+	[inativo] [nchar](10) NOT NULL,
+	PRIMARY KEY (Id))
+
+CREATE TABLE [dbo].[Produto](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[descricao] [nvarchar](max) NOT NULL,
+	[nome] [nvarchar](max) NOT NULL,
+	[categoria] [nvarchar](max) NOT NULL,
+	[modelo] [nvarchar](max) NOT NULL,
+	[marca] [nvarchar](max) NOT NULL,
+	[valor] [decimal] NOT NULL,
+	[quantidade] [decimal] NOT NULL,
+	[inativo] [nchar](10) NOT NULL,
+	PRIMARY KEY (Id))
+
+CREATE TABLE [dbo].[Item](
+	[Id] [int]  NOT NULL,
+	[IdProduto] [int] NOT NULL,
+	[IdPedido] [int] NOT NULL,
+	[valor] [decimal] NOT NULL,
+	[quantidade] [decimal] NOT NULL,
+	CONSTRAINT PK_Person PRIMARY KEY (ID,IdPedido),
+	FOREIGN KEY (IdPedido) REFERENCES Pedido(Id),
+	FOREIGN KEY (IdProduto) REFERENCES Produto(Id))
