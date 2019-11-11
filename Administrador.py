@@ -59,10 +59,16 @@ while True:
                                ', "quantidade":'+str(quantidade)+'}')
         op = input('Deseja Cadastrar esse Produto ? (1-Sim / 2-Não) > ')
         if op == '1':
-            produtoCadastro = json.loads(cadastroDeProduto)
-            x = client.service.addProdut(produtoCadastro)
-            print(x)
-            print('Produto Cadatrado com Sucesso!')
+            try:
+                produtoCadastro = json.loads(cadastroDeProduto)
+                print(produtoCadastro)
+                client.service.addProdut(produtoCadastro)
+                
+                #print(x)
+                print('Produto Cadatrado com Sucesso!')
+            except Exception as e:
+                print(e.args[0])
+            
         else:
             print('Cadatrado Cancelado!')
     
